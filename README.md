@@ -4,6 +4,6 @@
   It was fun making it and didint take too long.
   
 ## Project setup
-```Download / clone and then NPM install for the dependencies.
+Download / clone and then NPM install for the dependencies.
 
 
