@@ -1,13 +1,13 @@
 # frontend
-
+  This project relies on Vue CLI 3 as frontend framework
 ## Project setup
 ```
-npm install
+Download / clone and then npm install for dependencies 
 ```
 
 ### Compiles and hot-reloads for development
 ```
-npm run serve
+npm run serve to launch frontend at localhost:8080 (default)
 ```
 
 ### Compiles and minifies for production
@@ -17,7 +17,7 @@ npm run build
 
 ### Run your tests
 ```
-npm run test
+no tests
 ```
 
 ### Lints and fixes files
