@@ -1,8 +1,8 @@
 <template>
    <section class="home-container" v-if="!isLoading">
         <AppHeader @emit-filter="setFilter"></AppHeader>
-        <WeatherPreview :weather="weatherForDisplay" :forecast="forecastForDisplay" :cityName="cityNameToRender" ></WeatherPreview>
-       <section class="photos-list-container">
+        <WeatherPreview :weather="weatherForDisplay" :forecast="forecastForDisplay" :cityName="cityNameToRender"></WeatherPreview>
+       <section class="photos-list-container" >
             <PhotosList :photos="photosForDisplay"></PhotosList>
        </section>
    </section>
@@ -16,7 +16,7 @@ import PhotosList from "@/components/PhotosList"
 export default {
     data(){
         return {
-            isLoading: false
+            isLoading: false,
         }
     },
 
@@ -51,7 +51,6 @@ export default {
             this.loadWeather()
             this.isLoading = false
         },
-
     },
     created(){
         this.loadWeather()

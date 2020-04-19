@@ -1,12 +1,12 @@
 <template>
     <section class="weather-preview-container" v-if="weather">
-        <section class="weather-head-container flex row align-center space-around">
+        <section class="weather-head-container flex align-center space-around">
                 <img class="svg-background" :src="getIcon" alt="SVG">
                 <img class="background-city" :src="getBackground" alt="background">
 
             <div class="head-details-container flex column space-around">
                 <p class="city-name temperature-container">{{cityName}} - {{weather.Temperature.Metric.Value}} </p>
-                <p>{{weather.WeatherText}}</p> 
+                <p class="weather-text">{{weather.WeatherText}}</p> 
 
             </div>
         </section>
@@ -71,29 +71,10 @@ export default {
         height: 100%;
         margin: 0px auto;
     }
-    @media screen and (max-width: 560px) {
-        .forecast-container {
-            grid-template-columns: 1fr 1fr;
-            grid-template-rows: 1fr 1fr 1fr;
-            gap: 12px 0px;
-            width: 90%;
-        }
-    }
     .head-details-container {
         height: 50%;
         width: 80%;
         font-size: 2rem;
-    }
-    @media screen and (max-width: 560px) {
-        .head-details-container {
-          font-size: 1.2rem;
-          width: 60%;
-          height: 25%;
-        }
-        .svg-background {
-            width: 40%;
-            height: 45%;
-        }
     }
     .weather-details-container {
         width: inherit;
@@ -111,7 +92,7 @@ export default {
     .temperature-container::after {
         content: "\00b0";
     }
-    .city-name {
+    .city-name, .weather-text {
         padding: 0;
         margin: 0;
         font-family: cursive;
@@ -124,5 +105,25 @@ export default {
         width: 100vw;
         opacity: 0.8;
         z-index: -10;
+    }
+    @media screen and (max-width: 560px) {
+        .forecast-container {
+            grid-template-columns: 1fr 1fr;
+            grid-template-rows: 1fr 1fr 1fr;
+            gap: 12px 0px;
+            width: 90%;
+        }
+        .weather-head-container {
+            flex-direction: column;
+            justify-content: center;
+        }
+        .head-details-container {
+            width: 60%;
+            height: 25%;
+        }
+        .svg-background {
+            width: 40%;
+            height: 45%;
+        }
     }
 </style>

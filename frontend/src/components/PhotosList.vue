@@ -3,7 +3,7 @@
         <section class="photo-preview-container">
             <PhotoPreview v-for="photo in photos" :photo="photo" :key="photo.id"></PhotoPreview>
         </section>
-        <button class="scroll-top" @click="scrollToTop" :class="{ show: isActive }"></button>
+        <button class="scroll-top" @click="scrollToTop" :class="{ show: isActive }">Back to top</button>
         <footer class="footer" ref="footer"></footer>
     </section>
     
@@ -36,7 +36,7 @@ export default {
                 behavior: "smooth"
             })
             this.isActive = false
-        }
+        },
     },
     mounted() {
         this.observer = new IntersectionObserver(this.handleIntersect, this.options);
@@ -74,21 +74,17 @@ export default {
 
     .scroll-top {
         display: none;
+        font-family: cursive;
         position: fixed;
-        bottom: 15px;
-        right: 15px;
-        width: 45px;
-        height: 45px;
-        border-radius: 50%;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 35px;
         color: black;
         background: rgb(153, 89, 43);
-        font-size: 1.6rem;
-        opacity: 0.8;
+        font-size: 1.5rem;
         z-index: 4;
         outline: none;
-    }
-    .scroll-top::after {
-        content:  "\21e7";
     }
     .scroll-top:hover {
         cursor: pointer;
