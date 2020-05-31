@@ -3,7 +3,7 @@
         <section class="photo-preview-container">
             <PhotoPreview v-for="photo in photos" :photo="photo" :key="photo.id"></PhotoPreview>
         </section>
-        <button class="scroll-top" @click="scrollToTop" :class="{ show: isActive }">Back to top</button>
+        <button class="scroll-top"  @click="scrollToTop" :class="{ show: isActive }">Top</button>
         <footer class="footer" ref="footer"></footer>
     </section>
     
@@ -13,6 +13,7 @@
 import PhotoPreview from "@/components/PhotoPreview"
 
 export default {
+    name:"PhotoList",
     data() {
         return {
             options: {root: null, rootMargins: "0px", threshold: 0.5},
@@ -37,6 +38,10 @@ export default {
             })
             this.isActive = false
         },
+        get() {
+            console.log("yoo");
+            
+        }
     },
     mounted() {
         this.observer = new IntersectionObserver(this.handleIntersect, this.options);
@@ -74,15 +79,15 @@ export default {
 
     .scroll-top {
         display: none;
-        font-family: cursive;
         position: fixed;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 35px;
+        bottom: 5%;
+        right: 5%;
+        width: 35px;
+        height: 40px;
+        padding: 0;
+        margin: 0;
         color: black;
-        background: rgb(153, 89, 43);
-        font-size: 1.5rem;
+        background:yellowgreen;
         z-index: 4;
         outline: none;
     }

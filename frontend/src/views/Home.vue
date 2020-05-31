@@ -1,7 +1,7 @@
 <template>
    <section class="home-container" v-if="!isLoading">
         <AppHeader @emit-filter="setFilter"></AppHeader>
-        <WeatherPreview :weather="weatherForDisplay" :forecast="forecastForDisplay" :cityName="cityNameToRender"></WeatherPreview>
+        <WeatherPreview :weather="weatherForDisplay" :forecast="forecastForDisplay" :cityName="cityNameToRender" @pic-loaded="shutLoaderOff"></WeatherPreview>
        <section class="photos-list-container" >
             <PhotosList :photos="photosForDisplay"></PhotosList>
        </section>
@@ -23,7 +23,7 @@ export default {
     computed: {
         weatherForDisplay() {
             let weather = this.$store.getters.weatherForDisplay
-            return weather[0]
+            return weather
         },
         forecastForDisplay() {
             let forecast =  this.$store.getters.forecastForDisplay
@@ -51,6 +51,10 @@ export default {
             this.loadWeather()
             this.isLoading = false
         },
+        shutLoaderOff() {
+            this.$store.commit({ type: 'setLoading', isLoading: false })
+        }
+
     },
     created(){
         this.loadWeather()

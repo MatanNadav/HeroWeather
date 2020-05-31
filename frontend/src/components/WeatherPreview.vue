@@ -2,17 +2,17 @@
     <section class="weather-preview-container" v-if="weather">
         <section class="weather-head-container flex align-center space-around">
                 <img class="svg-background" :src="getIcon" alt="SVG">
-                <img class="background-city" :src="getBackground" alt="background">
+                <img class="background-city" :src="getBackground" alt="background" @load="emitPictureLoaded">
 
             <div class="head-details-container flex column space-around">
-                <p class="city-name temperature-container">{{cityName}} - {{weather.Temperature.Metric.Value}} </p>
-                <p class="weather-text">{{weather.WeatherText}}</p> 
+                <p class="city-name temperature-container">{{cityName}} - {{weather.temp | toCel}}</p>
+                <p class="weather-text">{{weather.desc}} - {{weather.date | getDate}}</p> 
 
             </div>
         </section>
 
         <section class="forecast-container">
-            <ForecastPreview v-for="day in forecast.DailyForecasts" :day="day" :key="day.date"></ForecastPreview>
+            <ForecastPreview v-for="day in forecast" :day="day" :key="day.date"></ForecastPreview>
         </section>
 
     </section>
@@ -28,23 +28,28 @@ import ForecastPreview from "@/components/ForecastPreview"
 export default {
     props: {
         weather: Object,
-        forecast: Object,
+        forecast: Array,
         cityName: String,
     },
     computed: {
         getIcon() {
-            let desc = this.weather.WeatherText
+            let desc = this.weather.mainDesc
             return weatherService.getWeatherIcon(desc)
         },
         getBackground() {
             let data = this.$store.getters.getBackgroundPhoto
             let url = data.src.original
             return url + `?auto=compress&cs=tinysrgb&fit=crop&h=${screen.height}&w=${screen.width}`
-        },
+        }
+    },
+    methods: {
+        emitPictureLoaded() {
+            this.$emit('pic-loaded')   
+        }
     },
     components: {
         ForecastPreview,
-    }
+    },
 }
 </script>
 
@@ -84,10 +89,6 @@ export default {
         display: inline-block;
         padding: 0;
         margin: 0;
-        font-family: cursive;
-    }
-    .temperature-container {
-        font-family: cursive;
     }
     .temperature-container::after {
         content: "\00b0";
@@ -95,7 +96,6 @@ export default {
     .city-name, .weather-text {
         padding: 0;
         margin: 0;
-        font-family: cursive;
     }
     .background-city {
         position: fixed;

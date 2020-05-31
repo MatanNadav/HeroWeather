@@ -9,9 +9,8 @@ async function fetchWeather(req, res) {
     let {q} = req.query
     
     try {
-        let data = await weatherService.findLocation(q)
-        let {weather, forecast, cityName} = data
-        res.json({weather, forecast, cityName})
+        let data = await weatherService.getWeather(q)
+        res.json(data)
     }
     catch (err) {
         res.status('500').send('could not fetch weather')

@@ -52,7 +52,6 @@ export default {
     }
     .loader-text {
         color: chocolate;
-        font-family: cursive;
         font-weight: 700;
         font-size: 1.2rem;
 

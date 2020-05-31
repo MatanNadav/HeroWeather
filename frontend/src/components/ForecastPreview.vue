@@ -1,12 +1,14 @@
 <template>
     <section class="forecast-preview-container flex column" >
-        <div class="forecast-animation-container"><img class="forecast-animation" :src="getDayIcon" alt="Day Icon"></div>
+        <div class="forecast-animation-container">
+            <img class="forecast-animation" :src="getDayIcon" alt="Day Icon">
+        </div>
     
         <section class="forecast-text-container flex column space-around">
-            <h5 class="forecast-title">{{day.Day.IconPhrase}}</h5>
-            <p class="forecast-text">{{getDate}}</p>
-            <p class="forecast-text temp">High: {{day.Temperature.Maximum.Value}}</p>
-            <p class="forecast-text temp">Low: {{day.Temperature.Minimum.Value}}</p>
+            <h5 class="forecast-title">{{day.desc}}</h5>
+            <p class="forecast-text">{{day.date | getDate}}</p>
+            <p class="forecast-text temp">High: {{day.max | toCel}}</p>
+            <p class="forecast-text temp">Low: {{day.min | toCel}}</p>
         </section>
     </section>
 </template>
@@ -18,12 +20,8 @@ export default {
     props: ['day'],
     computed: {
         getDayIcon() {
-            let desc = this.day.Day.IconPhrase.toLowerCase()
+            let desc = this.day.desc.toLowerCase()
             return weatherService.getWeatherIcon(desc)
-        },
-        getDate() {
-            let date = new Date(this.day.Date).toUTCString()
-            return date.substring(0, date.length - 12);
         }
     }
 }
@@ -40,6 +38,10 @@ export default {
         .forecast-preview-container {
             width: 80%;
         }
+    }
+    .forecast-preview-container:hover {
+        background: whitesmoke;
+        opacity: 0.8;
     }
     
     .forecast-text-container {
@@ -61,7 +63,6 @@ export default {
         display: inline-block;
         padding: 0;
         margin: 0;
-        font-family: cursive;
     }
     .forecast-text {
         font-size: 1.1rem;

@@ -24,8 +24,13 @@ export default {
 </script>
 
 <style>
+@font-face {
+  font-family: Alegreya;
+  src: url('./assets/Alegreya/Alegreya-Regular.ttf');
+}
 #app {
-  font-family: cursive;
+  
+  font-family:"Alegreya";
   box-sizing: border-box;
 }
 body {

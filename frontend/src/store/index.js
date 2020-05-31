@@ -9,7 +9,7 @@ export default new Vuex.Store({
     filterBy: {
         txt: 'London'
     },
-    currWeather:{},
+    currWeather: {},
     currForecast: {},
     currCity: '',
     cityPhotos: [],
@@ -33,7 +33,7 @@ export default new Vuex.Store({
       return state.cityPhotos
     },
     getBackgroundPhoto(state) {
-      let rand = Math.floor(Math.random(state.cityPhotos.length))
+      let rand = Math.floor(Math.random() * state.cityPhotos[0].length)
       return state.cityPhotos[0][rand]
     },
     getLoading(state) {
@@ -82,11 +82,12 @@ export default new Vuex.Store({
           context.commit({ type: 'setLoading', isLoading: false })
           return
         }
-        const {weather, forecast, cityName} = res
+
+        const {weather, forecast} = res
+
         context.commit({ type: "setCurrWeather", weather })
         context.commit({ type: "setCurrForecast", forecast })
-        context.commit({ type: "setCurrCity", cityName })
-        context.commit({ type: 'setLoading', isLoading: false })
+        context.commit({ type: "setCurrCity", cityName: weather.name })
       },
       async fetchPhotos(context) {
         const photos = await weatherService.getPhotos(context.state.filterBy.txt)

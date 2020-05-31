@@ -32,6 +32,5 @@ export default {
         text-align: center;
         height: 35px;
         font-weight: bold;
-        font-family: cursive;
     }
 </style>
