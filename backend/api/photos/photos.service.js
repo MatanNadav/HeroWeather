@@ -1,6 +1,6 @@
 const axios = require('axios');
 
-const photosAPI = require("../../config/config.js").photoKey
+const photosAPI = require("../../config/config.js").keys.photoKey
 const config = {
     headers: {'Authorization': photosAPI} 
 }

@@ -7,8 +7,8 @@
         <section class="forecast-text-container flex column space-around">
             <h5 class="forecast-title">{{day.desc}}</h5>
             <p class="forecast-text">{{day.date | getDate}}</p>
-            <p class="forecast-text temp">High: {{day.max | toCel}}</p>
-            <p class="forecast-text temp">Low: {{day.min | toCel}}</p>
+            <p class="forecast-text temp">High: {{day.max_temp | toCel}}</p>
+            <p class="forecast-text temp">Low: {{day.min_temp | toCel}}</p>
         </section>
     </section>
 </template>

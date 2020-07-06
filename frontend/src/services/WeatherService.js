@@ -15,6 +15,7 @@ export default {
 async function fetchCurrWeather (query = 'London') {
     let q = `?q=${query}`;
     const res = await axios.get(`${BASE_URL}weather` + q);
+    
     if(res.data) return res.data
     else {
         return null;

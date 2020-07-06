@@ -1,20 +1,29 @@
 const axios = require('axios');
-const db = require('../../services/db.service.js')
-const APIKey = require("../../config/config.js").config.weatherKey
+const db = require('../../services/db.service');
+const dbService = require('../../services/db.service');
+const APIKey = require("../../config/config.js").keys.weatherKey
 
 const weatherAPI = `http://api.openweathermap.org/data/2.5/weather?appid=${APIKey}&q=`
 
 module.exports = {
-    getWeather
+    getWeather,
+    updateDammit
 }
 
 
 async function getWeather(query = "London", isConnectToAPI = false) {
-    if (!isConnectToAPI) {
-        const dbRes = await db.getWeatherDataFromDB(query)
-        if (dbRes) return dbRes
-    }
     try {
+        if (!isConnectToAPI) {
+            let dbRes = await db.interactWithDB(null, query, "getWeatherData")
+            if (dbRes.weather[0]) {
+                const data = {
+                    weather:dbRes.weather[0],
+                    forecast: dbRes.forecast
+                }
+                return data
+            }
+        }
+        
         const res = await axios.get(weatherAPI + query)
         const city = { id: res.data.id ,coord: res.data.coord, name: res.data.name}
         const weatherData = await getWeatherData(city.coord)
@@ -39,12 +48,13 @@ async function getWeatherData(coord) {
 }
 
 function formatData(weatherData, city) {
+    
     const data = {
         weather: {
             id: city.id,
             name: city.name,
             date: weatherData.current.dt,
-            temp: weatherData.current.temp,
+            temperature: weatherData.current.temp,
             feelsLike: weatherData.current.feels_like,
             mainDesc: weatherData.current.weather[0].main,
             desc: weatherData.current.weather[0].description,
@@ -60,11 +70,25 @@ function formatData(weatherData, city) {
                 tempNight: daily.temp.night,
                 min: daily.temp.min,
                 max: daily.temp.max,
-                desc: daily.weather[0].main,
-                icon: daily.weather[0].icon
+                desc: daily.weather[0].main
             }
         })
     }
     data.forecast.splice(0, 1)
     return data
+}
+
+
+async function updateDammit() {
+    try {
+        console.log("inside dammit");
+        
+        const res = await dbService.insertoToDB()
+        console.log(res);
+        
+
+    } 
+    catch (err) {
+        throw err
+    }
 }

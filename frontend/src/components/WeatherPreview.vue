@@ -5,7 +5,7 @@
                 <img class="background-city" :src="getBackground" alt="background" @load="emitPictureLoaded">
 
             <div class="head-details-container flex column space-around">
-                <p class="city-name temperature-container">{{cityName}} - {{weather.temp | toCel}}</p>
+                <p class="city-name temperature-container">{{cityName}} - {{weather.temperature | toCel}}</p>
                 <p class="weather-text">{{weather.desc}} - {{weather.date | getDate}}</p> 
 
             </div>
@@ -46,6 +46,9 @@ export default {
         emitPictureLoaded() {
             this.$emit('pic-loaded')   
         }
+    },
+    created() {
+        
     },
     components: {
         ForecastPreview,
