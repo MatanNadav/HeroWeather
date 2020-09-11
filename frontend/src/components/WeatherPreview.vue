@@ -5,8 +5,8 @@
                 <img class="background-city" :src="getBackground" alt="background" @load="emitPictureLoaded">
 
             <div class="head-details-container flex column space-around">
-                <p class="city-name temperature-container">{{cityName}} - {{weather.temperature | toCel}}</p>
-                <p class="weather-text">{{weather.desc}} - {{weather.date | getDate}}</p> 
+                <p class="city-name temperature-container">{{cityName}} - {{weather.temp | toCel}}</p>
+                <p class="weather-text">{{weather.main_desc}} - {{weather.date | getDate}}</p> 
 
             </div>
         </section>
@@ -33,7 +33,7 @@ export default {
     },
     computed: {
         getIcon() {
-            let desc = this.weather.mainDesc
+            let desc = this.weather.main_desc
             return weatherService.getWeatherIcon(desc)
         },
         getBackground() {

@@ -44,8 +44,8 @@ export default new Vuex.Store({
     setStoreFilter(state, txt) {
       state.filterBy = {txt}
     },
-    setCurrWeather(state, {weather}) {
-      state.currWeather = weather;
+    setCurrWeather(state, {res}) {
+      state.currWeather = res;
     },
     setCurrForecast(state, {forecast}) {
       state.currForecast = forecast;        
@@ -83,11 +83,11 @@ export default new Vuex.Store({
           return
         }
 
-        const {weather, forecast} = res
+        const {forecast} = res
 
-        context.commit({ type: "setCurrWeather", weather })
+        context.commit({ type: "setCurrWeather", res })
         context.commit({ type: "setCurrForecast", forecast })
-        context.commit({ type: "setCurrCity", cityName: weather.name })
+        context.commit({ type: "setCurrCity", cityName: res.name })
       },
       async fetchPhotos(context) {
         const photos = await weatherService.getPhotos(context.state.filterBy.txt)

@@ -4,6 +4,5 @@ const router = express.Router()
 module.exports = router
 
 router.get('/', weatherController.fetchWeather)
-router.get('/updatedbforsho', weatherController.updateDB)
 
 
