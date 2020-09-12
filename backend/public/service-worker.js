@@ -14,7 +14,7 @@
 importScripts("https://storage.googleapis.com/workbox-cdn/releases/4.3.1/workbox-sw.js");
 
 importScripts(
-  "/precache-manifest.6224f55ba263d7a3acb90180f07d9662.js"
+  "/precache-manifest.c2a6faa12add97a5ffa71466e2281998.js"
 );
 
 workbox.core.setCacheNameDetails({prefix: "hero-weather"});

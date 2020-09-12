@@ -22,9 +22,15 @@ async function getWeatherFromDb(query = 'london') {
             const regex = new RegExp(query)
             criteria.name = {$regex: regex, $options: 'i'}
             const weatherRes = await collection.find(criteria).toArray()
-            if (!weatherRes[0].name) {
-                let res = getWeatherFromApi(query)
-                return res
+            if (!weatherRes[0]) {
+                let res = await getWeatherFromApi(query)
+                if (!res) {
+                    let data = await getWeatherFromApi()
+                    return data
+                }
+                else {
+                    return res
+                }
             }
             else {
                 return weatherRes
@@ -36,7 +42,7 @@ async function getWeatherFromDb(query = 'london') {
         }
     }
     else {
-        let res = getWeatherFromApi(query)
+        let res = await getWeatherFromApi(query)
         return res
     }
 }
@@ -50,8 +56,8 @@ async function getWeatherFromApi(query = "london") {
         return formattedData
     }
     catch (err) {
-        console.warn('Something went wrong at fetching weather', err)
-        throw err
+        console.warn('Something went wrong at fetching weather')
+        // throw err
     }
 }
 
@@ -98,7 +104,7 @@ function formatData(weatherData, city) {
 // daily updating the db at 3:00 AM with new data from API
 const updateDB = schedule.scheduleJob('0 0 3 * * *', () => {
     try {
-        citiesListInDB.forEach( async city => {
+        citiesList.forEach( async city => {
             const res = await getWeatherFromApi(city)
             await dbService.updateDB(res)
             

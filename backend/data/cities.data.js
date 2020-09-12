@@ -11,7 +11,6 @@ module.exports =  {
         "barcelona",
         "los angeles",
         "rome",
-        "san francisco",
         "madrid",
         "amsterdam",
         "toronto",
@@ -24,8 +23,6 @@ module.exports =  {
         "milan",
         "munich",
         "vancouver",
-        "dublin",
-        "frankfurt",
     ]
 } 
 

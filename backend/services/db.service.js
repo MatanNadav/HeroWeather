@@ -19,15 +19,18 @@ module.exports = {
 }
 async function connect() {
     if (dbConn) return dbConn;
-    try {
-        const client = await MongoClient.connect(dbUri, {useNewUrlParser: true});
-        const db = client.db(dbName);
-        dbConn = db;
-        return db;
-    } catch(err) {
-        console.warn('Cannot Connect to DB in connect', err)
-        throw err;
+    else {
+        try {
+            const client = await MongoClient.connect(dbUri, {useNewUrlParser: true, useUnifiedTopology: true});
+            const db = client.db(dbName);
+            dbConn = db;
+            return db;
+        } catch(err) {
+            console.warn('Cannot Connect to DB in connect', err)
+            throw err;
+        }
     }
+  
 }
 
 
@@ -59,7 +62,7 @@ async function updateDB(data) {
         return
     }
     catch(err) {
-        console.warn('Cannot insert to DB', err)
+        console.warn('Cannot update to DB', err)
         throw err;
     }
 }

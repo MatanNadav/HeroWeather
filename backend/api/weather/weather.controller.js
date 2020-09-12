@@ -2,7 +2,7 @@ const weatherService = require('./weather.service')
 
 
 module.exports = {
-    fetchWeather
+    fetchWeather,
 }
 
 async function fetchWeather(req, res) {
