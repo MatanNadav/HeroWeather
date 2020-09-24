@@ -4,7 +4,8 @@
             <img class="loader-svg" src="../assets/svg/Loader.svg" alt="Loader">
             <p class="loader-text" v-if=" counter === 0">Getting City's current weather</p>
             <p class="loader-text" v-if=" counter === 1">Searching for City's photos</p>
-            <p class="loader-text" v-if=" counter >= 2">Updating interface</p>
+            <p class="loader-text" v-if=" counter >= 2 && counter <= 10">Updating interface</p>
+            <p class="loader-text" v-if=" counter > 10" >Api not available at this moment. Come back later</p>
         </section>
     </section>
 </template>

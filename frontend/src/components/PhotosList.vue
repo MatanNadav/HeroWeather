@@ -1,9 +1,9 @@
 <template>
-    <section class="photo-list-container" v-if="photos">
+    <section class="photo-list-container" v-if="photos" ref="body">
         <section class="photo-preview-container">
             <PhotoPreview v-for="photo in photos" :photo="photo" :key="photo.id"></PhotoPreview>
         </section>
-        <button class="scroll-top"  @click="scrollToTop" :class="{ show: isActive }">Top</button>
+        <button class="scroll-top"  @click="scrollToTop" :class="{ show: isActive }"><i class="arrow"></i></button>
         <footer class="footer" ref="footer"></footer>
     </section>
     
@@ -38,15 +38,20 @@ export default {
             })
             this.isActive = false
         },
-        get() {
-            console.log("yoo");
-            
+        handleScroll() {
+            let rect = this.$refs.body.getBoundingClientRect()
+            if (rect.y > 500) this.isActive = false
         }
     },
     mounted() {
         this.observer = new IntersectionObserver(this.handleIntersect, this.options);
         this.observer.observe(this.$refs.footer)
-    
+    },
+    created(){
+        window.addEventListener('scroll', this.handleScroll);
+    },
+     destroyed () {
+        window.removeEventListener('scroll', this.handleScroll);
     },
     components: {
         PhotoPreview,
@@ -79,15 +84,7 @@ export default {
 
     .scroll-top {
         display: none;
-        position: fixed;
-        bottom: 5%;
-        right: 5%;
-        width: 35px;
-        height: 40px;
-        padding: 0;
-        margin: 0;
-        color: black;
-        background:yellowgreen;
+        color: transparent;
         z-index: 4;
         outline: none;
     }
@@ -96,6 +93,16 @@ export default {
     }
     .show {
         display: block;
+    }
+    .arrow {
+        position: fixed;
+        bottom: 5%;
+        right: 5%;
+        border: solid black;
+        border-width: 0 8px 8px 0;
+        display: inline-block;
+        padding: 10px;
+        transform: rotate(-135deg);
     }
 
     .footer {

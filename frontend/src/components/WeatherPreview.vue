@@ -45,10 +45,14 @@ export default {
     methods: {
         emitPictureLoaded() {
             this.$emit('pic-loaded')   
-        }
-    },
-    created() {
-        
+        },
+        handleIntersect(entries) {
+            if (entries[0].isIntersecting) {
+                console.log('fired from preview')
+                this.$store.dispatch({ type: "disableButton" })
+            }
+            else return
+        },
     },
     components: {
         ForecastPreview,

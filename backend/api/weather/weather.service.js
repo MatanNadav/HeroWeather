@@ -25,7 +25,9 @@ async function getWeatherFromDb(query = 'london') {
             if (!weatherRes[0]) {
                 let res = await getWeatherFromApi(query)
                 if (!res) {
-                    let data = await getWeatherFromApi()
+                    let newRegex = new RegExp('london')
+                    criteria.name = {$regex: newRegex, $options: 'i'}
+                    const data = await collection.find(criteria).toArray()
                     return data
                 }
                 else {
@@ -50,6 +52,7 @@ async function getWeatherFromDb(query = 'london') {
 async function getWeatherFromApi(query = "london") {
     try {
         const res = await axios.get(weatherAPI + query)
+        if (!res) return null
         const city = { id: res.data.id ,coord: res.data.coord, name: res.data.name }
         const weatherData = await getWeatherData(city.coord)
         const formattedData = formatData(weatherData, city)
@@ -57,7 +60,7 @@ async function getWeatherFromApi(query = "london") {
     }
     catch (err) {
         console.warn('Something went wrong at fetching weather')
-        // throw err
+        throw err
     }
 }
 
@@ -102,13 +105,20 @@ function formatData(weatherData, city) {
 
 
 // daily updating the db at 3:00 AM with new data from API
-const updateDB = schedule.scheduleJob('0 0 3 * * *', () => {
+const updateDB = schedule.scheduleJob('* * 3 * * *', () => {
+    let interval
+    let idx = 0
+    let weatherArray = []
     try {
-        citiesList.forEach( async city => {
-            const res = await getWeatherFromApi(city)
-            await dbService.updateDB(res)
-            
-        })
+        interval = setInterval( async () => {
+            let res = await getWeatherFromApi(citiesList[idx])
+            weatherArray.push(res)
+            if (++idx >= citiesList.length) {
+                clearInterval(interval)
+                await dbService.updateDB(weatherArray)
+            }
+        }, 300)
+        
     } catch(err) {
         console.warn(err)
         throw err

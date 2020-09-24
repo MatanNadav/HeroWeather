@@ -53,13 +53,19 @@ async function insertToDB(data) {
     }
 }
 
-async function updateDB(data) {
+async function updateDB(dataArray) {
     if (!dbConn) {
         collection = await getCollection(COLLECTION_KEY)
     }
     try {
-        await collection.updateOne({ "id": data.id }, { $set: data })
-        return
+        let idx = 0
+        let interval = setInterval( async () => {
+            await collection.updateOne({ "id": dataArray[idx].id }, { $set: dataArray[idx] })
+            if (++idx >= dataArray.length) {
+                clearInterval(interval)
+            }
+        }, 300)
+
     }
     catch(err) {
         console.warn('Cannot update to DB', err)

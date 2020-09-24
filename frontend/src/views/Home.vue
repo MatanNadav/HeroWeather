@@ -1,7 +1,7 @@
 <template>
    <section class="home-container" v-if="!isLoading">
         <AppHeader @emit-filter="setFilter"></AppHeader>
-        <WeatherPreview :weather="weatherForDisplay" :forecast="forecastForDisplay" :cityName="cityNameToRender" @pic-loaded="shutLoaderOff"></WeatherPreview>
+        <WeatherPreview :weather="weatherForDisplay" :forecast="forecastForDisplay" :cityName="cityNameToRender" @pic-loaded="shutLoaderOff" ></WeatherPreview>
        <section class="photos-list-container" >
             <PhotosList :photos="photosForDisplay"></PhotosList>
        </section>
@@ -16,7 +16,7 @@ import PhotosList from "@/components/PhotosList"
 export default {
     data(){
         return {
-            isLoading: false,
+            isLoading: false
         }
     },
 
