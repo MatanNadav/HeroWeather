@@ -5,8 +5,7 @@ const COLLECTION_KEY = require('../config/config.js').collection_key
 
 const MongoClient = require('mongodb').MongoClient;
 const dbName = 'WEATHER_DB';
-const connection = null
-var dbConn = null;
+let dbConn;
 
 
 
@@ -58,6 +57,7 @@ async function updateDB(dataArray) {
         collection = await getCollection(COLLECTION_KEY)
     }
     try {
+        console.log('db on')
         let idx = 0
         let interval = setInterval( async () => {
             await collection.updateOne({ "id": dataArray[idx].id }, { $set: dataArray[idx] })

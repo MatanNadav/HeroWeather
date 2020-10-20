@@ -123,6 +123,7 @@ export default {
         .weather-head-container {
             flex-direction: column;
             justify-content: center;
+            height: 50%
         }
         .head-details-container {
             width: 60%;

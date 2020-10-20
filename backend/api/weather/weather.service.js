@@ -1,8 +1,6 @@
 const axios = require('axios');
 const dbService = require('../../services/db.service');
 const config = require("../../config/config.js")
-const citiesList = require("../../data/cities.data").cities
-const schedule = require('node-schedule')
 const COLLECTION_KEY = require('../../config/config.js').collection_key
 
 
@@ -10,7 +8,7 @@ const weatherAPI = `http://api.openweathermap.org/data/2.5/weather?appid=${confi
 
 module.exports = {
     getWeatherFromApi,
-    getWeatherFromDb,
+    getWeatherFromDb
 }
 
 
@@ -101,27 +99,3 @@ function formatData(weatherData, city) {
     data.forecast.splice(0, 1)
     return data
 }
-
-
-
-// daily updating the db at 3:00 AM with new data from API
-const updateDB = schedule.scheduleJob('* * 3 * * *', () => {
-    let interval
-    let idx = 0
-    let weatherArray = []
-    try {
-        interval = setInterval( async () => {
-            let res = await getWeatherFromApi(citiesList[idx])
-            weatherArray.push(res)
-            if (++idx >= citiesList.length) {
-                clearInterval(interval)
-                await dbService.updateDB(weatherArray)
-            }
-        }, 300)
-        
-    } catch(err) {
-        console.warn(err)
-        throw err
-    }
-   
-})
