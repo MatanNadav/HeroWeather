@@ -19,7 +19,6 @@ export default {
     methods: {
         emitFilter() {
             let regex = /^[a-zA-Z][a-zA-Z\s]+$/
-            console.log(this.filterBy.txt.match(regex))
             if (this.filterBy.txt.match(regex)) {
                 this.$emit('emit-filter', this.filterBy)
                 this.filterBy = {txt: ''}
